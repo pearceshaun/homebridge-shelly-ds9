@@ -2,7 +2,7 @@ import { API, Service, WithUUID } from "homebridge";
 
 import { CustomCharacteristics } from "./characteristics";
 
-type S = WithUUID<typeof Service>;
+type S = WithUUID<typeof Service> & (new (displayName?: string, subtype?: string) => Service);
 
 export interface CustomServices {
   PowerMeter: S;
