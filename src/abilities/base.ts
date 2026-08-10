@@ -11,7 +11,7 @@ import { CustomServices } from "../utils/services";
 import { DeviceLogger } from "../utils/device-logger";
 import { ShellyPlatform } from "../platform";
 
-export type ServiceClass = WithUUID<typeof Service>;
+export type ServiceClass = WithUUID<typeof Service> & (new (displayName?: string, subtype?: string) => Service);
 
 /**
  * Base class for all abilities.

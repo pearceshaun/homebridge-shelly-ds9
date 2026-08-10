@@ -23,7 +23,7 @@ export const createCharacteristics = (api: API): CustomCharacteristics => {
     constructor() {
       super('Current Consumption', CurrentConsumption.UUID, {
         format: api.hap.Formats.FLOAT,
-        perms: [api.hap.Perms.NOTIFY, api.hap.Perms.READ],
+        perms: [api.hap.Perms.NOTIFY, api.hap.Perms.PAIRED_READ],
         unit: 'W',
         minValue: 0,
         maxValue: 12000,
@@ -41,7 +41,7 @@ export const createCharacteristics = (api: API): CustomCharacteristics => {
     constructor() {
       super('Electric Current', ElectricCurrent.UUID, {
         format: api.hap.Formats.FLOAT,
-        perms: [api.hap.Perms.NOTIFY, api.hap.Perms.READ],
+        perms: [api.hap.Perms.NOTIFY, api.hap.Perms.PAIRED_READ],
         unit: 'A',
         minValue: 0,
         maxValue: 48,
@@ -59,7 +59,7 @@ export const createCharacteristics = (api: API): CustomCharacteristics => {
     constructor() {
       super('Total Consumption', TotalConsumption.UUID, {
         format: api.hap.Formats.FLOAT,
-        perms: [api.hap.Perms.NOTIFY, api.hap.Perms.READ],
+        perms: [api.hap.Perms.NOTIFY, api.hap.Perms.PAIRED_READ],
         unit: 'kWh',
         minValue: 0,
         maxValue: 1000000,
@@ -77,7 +77,7 @@ export const createCharacteristics = (api: API): CustomCharacteristics => {
     constructor() {
       super('Voltage', Voltage.UUID, {
         format: api.hap.Formats.FLOAT,
-        perms: [api.hap.Perms.NOTIFY, api.hap.Perms.READ],
+        perms: [api.hap.Perms.NOTIFY, api.hap.Perms.PAIRED_READ],
         unit: 'V',
         minValue: -1000,
         maxValue: 1000,
