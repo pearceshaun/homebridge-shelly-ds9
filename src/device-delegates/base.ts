@@ -278,6 +278,13 @@ export abstract class DeviceDelegate {
     const details = reason.length > 0 ? 'reason: ' + reason : 'code: ' + code;
     this.log.warn((this.connected ? 'Device disconnected' : 'Connection failed') + ' (' + details + ')');
 
+    // shellies-ds9 treats every normal closure (code 1000) as intentional and doesn't reconnect, but
+    // devices also close with 1000 ("Bye") when they reboot, e.g. for a firmware update. Only the
+    // library's own disconnects use the reason 'User request'.
+    if (reconnectIn === null && code === 1000 && reason !== 'User request') {
+      reconnectIn = this.scheduleReconnect();
+    }
+
     if (reconnectIn !== null) {
       let msg = 'Reconnecting in ';
 
@@ -293,6 +300,16 @@ export abstract class DeviceDelegate {
     }
 
     this.connected = false;
+  }
+
+  /**
+   * Asks the RPC handler to schedule a connection attempt using its configured reconnect intervals.
+   * @returns The time, in milliseconds, until the attempt; or `null` if none was scheduled.
+   */
+  protected scheduleReconnect(): number | null {
+    // scheduleConnect() is protected in shellies-ds9, so reach it through a structural type
+    const handler = this.device.rpcHandler as unknown as { scheduleConnect?: () => number | null };
+    return typeof handler.scheduleConnect === 'function' ? handler.scheduleConnect() : null;
   }
 
   /**
