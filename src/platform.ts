@@ -18,6 +18,7 @@ import {
 import { CustomCharacteristics, createCharacteristics } from './utils/characteristics';
 import { CustomServices, createServices } from './utils/services';
 import { DeviceCache } from './utils/device-cache';
+import { RetryingShellies } from './utils/retrying-shellies';
 import { DeviceDelegate } from './device-delegates';
 import { PlatformOptions } from './config';
 
@@ -169,12 +170,12 @@ export class ShellyPlatform implements DynamicPlatformPlugin {
     this.customServices = Object.freeze(createServices(api, this.customCharacteristics));
 
     // setup shellies-ds9
-    this.shellies = new Shellies({
+    this.shellies = new RetryingShellies({
       websocket: { ...this.options.websocket, clientId: 'homebridge-shelly-ds9-' + Math.round(Math.random() * 1000000) },
       autoLoadStatus: true,
       autoLoadConfig: true,
       deviceOptions: this.options.deviceOptions,
-    });
+    }, log);
     this.shellies
       .on('add', this.handleAddedDevice, this)
       .on('remove', this.handleRemovedDevice, this)
