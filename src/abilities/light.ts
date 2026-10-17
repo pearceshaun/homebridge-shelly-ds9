@@ -25,6 +25,10 @@ export class LightAbility extends Ability {
       this.Characteristic.On,
       this.component.output,
     );
+    this.service.setCharacteristic(
+      this.Characteristic.Brightness,
+      this.component.brightness,
+    );
 
     // listen for commands from HomeKit
     this.service.getCharacteristic(this.Characteristic.On)
